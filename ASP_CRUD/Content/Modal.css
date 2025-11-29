@@ -1,0 +1,108 @@
+﻿/* Modal background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Modal window */
+.modal-window {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 480px;
+    padding: 30px 35px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form header */
+.modal-window h4 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Form fields general layout */
+.form-horizontal {
+    width: 100%;
+}
+
+/* Labels (small, minimal) */
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+}
+
+/* Inputs */
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    transition: border-color .2s ease;
+}
+
+    /* Inputs on focus */
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+/* Three dropdown date inputs inline */
+.form-inline select.form-control {
+    display: inline-block;
+    width: 30%;
+}
+
+/* Button area */
+.modal-buttons {
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* Primary button */
+.btn-primary {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+/* Back link style */
+.modal-buttons a {
+    margin-left: 15px;
+    font-size: 14px;
+    color: #555;
+    text-decoration: none;
+}
+
+    .modal-buttons a:hover {
+        text-decoration: underline;
+    }
