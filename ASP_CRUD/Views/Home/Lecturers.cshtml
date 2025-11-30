@@ -7,13 +7,10 @@
 <h2>Lecturers</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateLecturer")
+    @Html.ActionLink("Create New", "CreateLecturer", new { @class = "btn btn-danger" })
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ID_lector)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -24,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Phone)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ID_faculty)
+            @Html.DisplayNameFor(model => model.Faculty.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.HireDate)
@@ -36,9 +33,6 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ID_lector)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
@@ -48,7 +42,7 @@
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ID_faculty)
+                @Html.DisplayFor(modelItem => item.Faculty.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.HireDate)
@@ -56,7 +50,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "DeleteLecturer", new { idLector = item.ID_lector }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to delete this lecturer?');" })
             </td>
         </tr>
     }

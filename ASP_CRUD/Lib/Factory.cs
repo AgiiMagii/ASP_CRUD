@@ -13,7 +13,7 @@ namespace ASP_CRUD.Lib
         {
             try
             {
-                return TransformStudentToStudentView(repository.GetEntities<Student>().OrderByDescending(s => s.Scholarship).Take(count).ToList());
+                return TransformStudentToStudentView(repository.GetEntities<Student>().OrderByDescending(s => s.ID_student).Take(count).ToList());
             }
             catch (Exception ex)
             {
@@ -24,7 +24,7 @@ namespace ASP_CRUD.Lib
         {
             try
             {
-                return repository.GetEntities<Lector>().OrderByDescending(l => l.HireDate).Take(count).ToList();
+                return repository.GetEntities<Lector>().OrderByDescending(l => l.ID_lector).Take(count).ToList();
             }
             catch (Exception ex)
             {
@@ -56,11 +56,22 @@ namespace ASP_CRUD.Lib
                 throw new Exception("Error deleting student: " + ex.Message);
             }
         }
+        public bool DeleteLecturer(long idLector)
+        {
+            try
+            {
+                return repository.DeleteEntity<Lector>(idLector);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error deleting lecturer: " + ex.Message);
+            }
+        }
         public StudentModel AddStudent(StudentModel student)
         {
             try
             {
-                var entity = new Student
+                Student entity = new Student
                 {
                     Name = student.Name,
                     Surname = student.Surname,
@@ -76,6 +87,27 @@ namespace ASP_CRUD.Lib
             catch (Exception ex)
             {
                 throw new Exception("Error adding student: " + ex.Message);
+            }
+        }
+        public Lector AddLecturer(Lector lecturer)
+        {
+            try
+            {
+                Lector entity = new Lector
+                {
+                    Name = lecturer.Name,
+                    Surname = lecturer.Surname,
+                    Phone = lecturer.Phone,
+                    ID_faculty = lecturer.ID_faculty,
+                    HireDate = lecturer.HireDate
+                };
+                var createdEntity = repository.AddEntity(entity);
+                lecturer.ID_lector = createdEntity.ID_lector;
+                return lecturer;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error adding lecturer: " + ex.Message);
             }
         }
         public List<Course> GetAllCourses()

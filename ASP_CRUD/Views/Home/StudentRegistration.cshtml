@@ -78,13 +78,13 @@
                                 Enumerable.Range(1, 12)
                                     .Select(m => new SelectListItem { Value = m.ToString("00"), Text = m.ToString("00") }),
                                 "Month",
-                                new { @class = "form-control", style = "width: 70px; margin-right:5px;" })
+                                new { @class = "form-control", style = "width: 90px; margin-right:5px;" })
 
                             @Html.DropDownList("BirthYear_Day",
                                 Enumerable.Range(1, 31)
                                     .Select(d => new SelectListItem { Value = d.ToString("00"), Text = d.ToString("00") }),
                                 "Day",
-                                new { @class = "form-control", style = "width: 70px;" })
+                                new { @class = "form-control", style = "width: 90px;" })
                         </div>
 
                         @Html.ValidationMessageFor(model => model.BirthYear, "", new { @class = "text-danger" })

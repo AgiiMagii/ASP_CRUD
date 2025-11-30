@@ -3,10 +3,7 @@ using ASP_CRUD.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Web;
 using System.Web.Mvc;
-using static ASP_CRUD.Lib.Enums;
 
 
 namespace ASP_CRUD.Controllers
@@ -88,10 +85,31 @@ namespace ASP_CRUD.Controllers
                 return View("../Shared/Error");
             }
         }
+        public ActionResult DeleteLecturer(long idLector)
+        {
+            try
+            {
+                bool deleted = factory.DeleteLecturer(idLector);
+                if (deleted)
+                {
+                    Lector lector = LectorData.Where(l => l.ID_lector == idLector).FirstOrDefault();
+                    if (lector != null)
+                    {
+                        LectorData.Remove(lector);
+                    }
+                }
+                return RedirectToAction("Lecturers");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Error deleting lector: " + ex.Message;
+                return View("../Shared/Error");
+            }
+        }
         [HttpGet]
         public ActionResult CreateStudent()
         {
-            return PartialView("StudentRegistration", new StudentModel()); // Atveram tukšu formu modālā logā.
+            return PartialView("StudentRegistration", new StudentModel());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -116,6 +134,36 @@ namespace ASP_CRUD.Controllers
                 StudentsData = factory.GetTopNStudents(100);
 
                 return RedirectToAction("Students");
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
+        [HttpGet]
+        public ActionResult CreateLecturer()
+        {
+            return PartialView("LecturerRegistration", new Lector());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateLecturer(Lector model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("LecturerRegistration", model);
+            }
+            try
+            {
+                int year = int.Parse(Request["HireDate_Year"]);
+                int month = int.Parse(Request["HireDate_Month"]);
+                int day = int.Parse(Request["HireDate_Day"]);
+                model.HireDate = new DateTime(year, month, day);
+                
+                factory.AddLecturer(model);
+                LectorData = factory.GetNLectors(100);
+                return RedirectToAction("Lecturers");
             }
             catch (Exception ex)
             {
