@@ -86,5 +86,20 @@ namespace ASP_CRUD.Lib
                 throw new Exception("Error adding entity: " + ex.Message);
             }
         }
+        public bool UpdateEntity<TEntity>(TEntity entity) where TEntity : class
+        {
+            try
+            {
+                var entry = _dbContext.Entry(entity);
+                if (entry.State == EntityState.Detached)
+                {
+                    return false;
+                }
+                entry.State = EntityState.Modified;
+                _dbContext.SaveChanges();
+                return true;
+            }
+            catch { throw; }
+        }
     } 
 }

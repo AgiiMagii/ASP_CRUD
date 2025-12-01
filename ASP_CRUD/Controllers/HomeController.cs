@@ -113,7 +113,7 @@ namespace ASP_CRUD.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateStudent(StudentModel model, long? course) // Accept nullable long in case no course was selected
+        public ActionResult CreateStudent(StudentModel model, long? course)
         {
             if (!ModelState.IsValid)
             {
@@ -164,6 +164,74 @@ namespace ASP_CRUD.Controllers
                 factory.AddLecturer(model);
                 LectorData = factory.GetNLectors(100);
                 return RedirectToAction("Lecturers");
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = 500;
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
+        [HttpGet]
+        public ActionResult EditStudent(long idStudent)
+        {
+            Student student = factory.GetStudentById(idStudent);
+
+            DateTime birthDate;
+            if (!student.BirthYear.HasValue)
+            {
+                birthDate = DateTime.Today;
+            }
+            else
+            {
+                birthDate = student.BirthYear.Value;
+            }
+
+            ViewBag.YearItems = Enumerable.Range(DateTime.Now.Year - 100, 101)
+                .Reverse()
+                .Select(y => new SelectListItem
+                {
+                    Value = y.ToString(),
+                    Text = y.ToString(),
+                    Selected = (birthDate.Year == y)
+                });
+
+            ViewBag.MonthItems = Enumerable.Range(1, 12)
+                .Select(m => new SelectListItem
+                {
+                    Value = m.ToString(),
+                    Text = m.ToString(),
+                    Selected = (birthDate.Month == m)
+                });
+
+            ViewBag.DayItems = Enumerable.Range(1, 31)
+                .Select(d => new SelectListItem
+                {
+                    Value = d.ToString(),
+                    Text = d.ToString(),
+                    Selected = (birthDate.Day == d)
+                });
+
+            return PartialView("EditStudent", student);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStudent(Student student)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("EditStudent", student);
+            }
+            try
+            {
+                int year = int.Parse(Request["BirthYear_Year"]);
+                int month = int.Parse(Request["BirthYear_Month"]);
+                int day = int.Parse(Request["BirthYear_Day"]);
+
+                student.BirthYear = new DateTime(year, month, day);
+
+                factory.UpdateStudent(student);
+                StudentsData = factory.GetTopNStudents(100);
+                return RedirectToAction("Students");
             }
             catch (Exception ex)
             {

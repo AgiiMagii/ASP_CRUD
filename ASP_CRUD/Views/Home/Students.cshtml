@@ -54,7 +54,7 @@
                 @Html.DisplayFor(modelItem => item.Scholarship)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("EditStudent", "EditStudent", new { idStudent = item.ID_student }, new { @class = "btn btn-danger" }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "DeleteStudent", new { idStudent = item.ID_student }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to delete this student?');" })
             </td>

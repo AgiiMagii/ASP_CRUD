@@ -221,7 +221,7 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
-    <Content Include="Scripts\modalOpen.js" />
+    <Content Include="Scripts\editStudent.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
@@ -249,6 +249,7 @@
     <Content Include="Views\Home\StudentRegistration.cshtml" />
     <Content Include="Views\Home\Lecturers.cshtml" />
     <Content Include="Views\Home\LecturerRegistration.cshtml" />
+    <Content Include="Views\Home\EditStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

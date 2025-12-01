@@ -132,5 +132,39 @@ namespace ASP_CRUD.Lib
                 throw new Exception("Error retrieving faculties: " + ex.Message);
             }
         }
+        public Student GetStudentById(long idStudent)
+        {
+            try
+            {
+                return repository.GetEntityById<Student>(idStudent);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error retrieving student: " + ex.Message);
+            }
+        }
+        public bool UpdateStudent(Student student)
+        {
+            try
+            {
+                // Rename the fetched entity to avoid variable shadowing and unassigned variable errors
+                Student existingStudent = repository.GetEntityById<Student>(student.ID_student);
+                if (existingStudent == null)
+                {
+                    return false;
+                }
+                existingStudent.Name = student.Name;
+                existingStudent.Surname = student.Surname;
+                existingStudent.BirthYear = student.BirthYear;
+                existingStudent.Scholarship = student.Scholarship;
+                existingStudent.Gender = student.Gender;
+                existingStudent.ID_course = student.ID_course;
+                return repository.UpdateEntity<Student>(existingStudent);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
